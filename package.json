@@ -1,0 +1,12 @@
+{
+  "name": "letable",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "airtable": "^0.5.0",
+    "eslint": "^3.19.0",
+    "express": "^4.15.2",
+    "rxjs": "^5.3.1"
+  }
+}
