@@ -1,11 +1,18 @@
 const rx = require('rxjs/Rx')
 const {Observable} = rx
 
-module.exports = function getNav (base) {
+function PresentationService (base) {
+  if (!(this instanceof PresentationService)) {
+    return new PresentationService(base)
+  }
+  this.base = base
+}
+
+PresentationService.prototype.get = function (base) {
   return Observable.create(observer => {
-    base('Pages').select({
+    this.base('Presentation').select({
       // Selecting the first 3 records in Grid view:
-      maxRecords: 3,
+      maxRecords: 100,
       view: 'Grid view'
     }).firstPage((err, records) => {
       if (err) {
@@ -14,11 +21,12 @@ module.exports = function getNav (base) {
         observer.error(err)
       }
       
-      console.log('requested navigation data')
+      console.log('requested presentation data')
       const model = records.map(item => {
         return {
+          id: item.id,
           name: item.get('Name'),
-          slug: item.get('slug')
+          content: item.get('Content')
         }
       })
 
@@ -27,3 +35,5 @@ module.exports = function getNav (base) {
     })
   })
 }
+
+module.exports = PresentationService

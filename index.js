@@ -11,6 +11,7 @@ console.info('Conected to base:', creds.baseId)
 
 const navigation$ = require('./navigation')(base).publishReplay(1).refCount()
 const feed = require('./feed')(base)
+const presentation = require('./presentation')(base)
 
 var app = express()
 
@@ -40,6 +41,16 @@ app.get('/feed.json', function (req, res) {
   }, err => {
     res.send(err)
   })
+})
+
+
+app.get('/presentation.json', (req, res) => {
+  res.status(200)
+  presentation.get()
+    .subscribe(data => {
+      res.send(data)
+    }, err => res.send(err))
+
 })
 
 app.get('/feed/:id/vote', (req, res) => {
